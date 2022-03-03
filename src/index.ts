@@ -6,7 +6,7 @@ const DEFAULT_TABLE_NAME = 'KeyValueCache';
 const DEFAULT_PARTITION_KEY = 'CacheKey';
 const DEFAULT_VALUE_ATTRIBUTE = 'CacheValue';
 const DEFAULT_TTL_ATTRIBUTE = 'CacheTTL';
-const DEFAULT_SECONARDY_KEY_VALUE = 'apq';
+const DEFAULT_SORT_KEY_VALUE = 'apq';
 const DEFAULT_TTL = 300;
 
 // tslint:disable-next-line: interface-name
@@ -37,7 +37,7 @@ export class DynamoDBCache implements KeyValueCache {
       tableName = DEFAULT_TABLE_NAME,
       partitionKeyName = DEFAULT_PARTITION_KEY,
       sortKeyName,
-      sortKeyValue = DEFAULT_SECONARDY_KEY_VALUE,
+      sortKeyValue = DEFAULT_SORT_KEY_VALUE,
       valueAttribute = DEFAULT_VALUE_ATTRIBUTE,
       ttlAttribute = DEFAULT_TTL_ATTRIBUTE,
       defaultTTL = DEFAULT_TTL,
