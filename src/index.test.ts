@@ -156,7 +156,7 @@ describe('DynamoDBCache', () => {
         keyValueCache = new DynamoDBCache(client, {
           tableName: 'FancyCacheTable',
           partitionKeyName: 'pk',
-          secondaryKeyName: 'sk',
+          sortKeyName: 'sk',
           valueAttribute: 'hash',
           ttlAttribute: 'ttl',
         });

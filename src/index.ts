@@ -13,8 +13,8 @@ const DEFAULT_TTL = 300;
 export interface DynamoDBCacheOptions {
   tableName?: string;
   partitionKeyName?: string;
-  secondaryKeyName?: string;
-  secondaryKeyValue?: string;
+  sortKeyName?: string;
+  sortKeyValue?: string;
   valueAttribute?: string;
   ttlAttribute?: string;
   defaultTTL?: number;
@@ -24,8 +24,8 @@ export class DynamoDBCache implements KeyValueCache {
   private client: DynamoDB.DocumentClient;
   private tableName: string;
   private partitionKeyName: string;
-  private secondaryKeyName: string | undefined;
-  private secondaryKeyValue: string;
+  private sortKeyName: string | undefined;
+  private sortKeyValue: string;
   private valueAttribute: string;
   private ttlAttribute: string;
   private defaultTTL: number;
@@ -36,8 +36,8 @@ export class DynamoDBCache implements KeyValueCache {
     const {
       tableName = DEFAULT_TABLE_NAME,
       partitionKeyName = DEFAULT_PARTITION_KEY,
-      secondaryKeyName,
-      secondaryKeyValue = DEFAULT_SECONARDY_KEY_VALUE,
+      sortKeyName,
+      sortKeyValue = DEFAULT_SECONARDY_KEY_VALUE,
       valueAttribute = DEFAULT_VALUE_ATTRIBUTE,
       ttlAttribute = DEFAULT_TTL_ATTRIBUTE,
       defaultTTL = DEFAULT_TTL,
@@ -45,8 +45,8 @@ export class DynamoDBCache implements KeyValueCache {
 
     this.tableName = tableName;
     this.partitionKeyName = partitionKeyName;
-    this.secondaryKeyName = secondaryKeyName;
-    this.secondaryKeyValue = secondaryKeyValue;
+    this.sortKeyName = sortKeyName;
+    this.sortKeyValue = sortKeyValue;
     this.valueAttribute = valueAttribute;
     this.ttlAttribute = ttlAttribute;
     this.defaultTTL = defaultTTL;
@@ -56,7 +56,7 @@ export class DynamoDBCache implements KeyValueCache {
     const params: DynamoDB.DocumentClient.GetItemInput = {
       Key: {
         [this.partitionKeyName]: key,
-        ...(this.secondaryKeyName ? { [this.secondaryKeyName]: this.secondaryKeyValue } : {}),
+        ...(this.sortKeyName ? { [this.sortKeyName]: this.sortKeyValue } : {}),
       },
       TableName: this.tableName,
     };
@@ -83,7 +83,7 @@ export class DynamoDBCache implements KeyValueCache {
         [this.partitionKeyName]: key,
         [this.valueAttribute]: value,
         [this.ttlAttribute]: epochSeconds,
-        ...(this.secondaryKeyName ? { [this.secondaryKeyName]: this.secondaryKeyValue } : {}),
+        ...(this.sortKeyName ? { [this.sortKeyName]: this.sortKeyValue } : {}),
       },
       TableName: this.tableName,
     };
@@ -98,6 +98,7 @@ export class DynamoDBCache implements KeyValueCache {
     const params: DynamoDB.DocumentClient.DeleteItemInput = {
       Key: {
         [this.partitionKeyName]: key,
+        ...(this.sortKeyName ? { [this.sortKeyName]: this.sortKeyValue } : {}),
       },
       TableName: this.tableName,
     };
