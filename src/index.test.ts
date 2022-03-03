@@ -148,4 +148,19 @@ describe('DynamoDBCache', () => {
       });
     });
   });
+
+  describe('basic functionality for tables with compound keys', () => {
+    describe('get', () => {
+      it.skip('can retrieve an existing key', async () => {
+        client = new AWS.DynamoDB.DocumentClient();
+        keyValueCache = new DynamoDBCache(client, {
+          tableName: 'FancyCacheTable',
+          partitionKeyName: 'pk',
+          valueAttribute: 'hash',
+          ttlAttribute: 'ttl',
+        });
+        expect(await keyValueCache.get('hello')).toBe('world');
+      });
+    });
+  });
 });
