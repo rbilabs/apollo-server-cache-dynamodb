@@ -70,9 +70,6 @@
       "jest-date-mock",
       "<rootDir>/setup-before-env.ts"
     ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/setup-after-env.ts"
-    ],
     "testEnvironment": "node"
   }
 }
