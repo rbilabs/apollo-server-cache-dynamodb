@@ -50,6 +50,7 @@
     "eslint": "^5.14.0",
     "jest": "^25.0.0",
     "jest-date-mock": "^1.0.7",
+    "jest-dynalite": "^3.4.4",
     "jest-junit": "^6.3.0",
     "prettier": "^1.16.4",
     "ts-jest": "^23.10.5",
@@ -67,7 +68,11 @@
       "jest-junit"
     ],
     "setupFiles": [
-      "jest-date-mock"
+      "jest-date-mock",
+      "<rootDir>/setup-before-env.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/setup-after-env.ts"
     ],
     "testEnvironment": "node"
   }
